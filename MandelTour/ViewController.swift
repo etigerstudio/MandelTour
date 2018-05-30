@@ -27,6 +27,7 @@ class ViewController: NSViewController {
     
     var busy = false
     var entered = false
+    var hiresRender = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,6 +64,10 @@ class ViewController: NSViewController {
     
     func initMandelRange() {
         updateMandelTextualRange()
+    }
+    
+    override func viewDidAppear() {
+        view.window?.delegate = self
     }
     
     func getAspectRatio() -> Double {
@@ -130,10 +135,18 @@ class ViewController: NSViewController {
     func invokeAgent() {
         busy = true
         showProgress(busy)
-        let range = Mandel.shared.calibratedRange(
-            width: Double(mandelScrollView.frame.width),
-            height: Double(mandelScrollView.frame.height))
-        let _ = MPIBroker.shared.spawnAgents(range: range)
+        
+        let width: Int
+        let height: Int
+        if hiresRender {
+            height = Int(ceil(mandelScrollView.frame.height))
+            width = Int(ceil(mandelScrollView.frame.width))
+        } else {
+            height = Int(ceil(mandelScrollView.frame.height/2))
+            width = Int(ceil(mandelScrollView.frame.width/2))
+        }
+        let range = Mandel.shared.calibratedRange(width: Double(width), height: Double(height))
+        let _ = MPIBroker.shared.spawnAgents(range: range, resX: width, resY: height)
     }
     
     func showProgress(_ busy: Bool) {
@@ -177,6 +190,12 @@ extension ViewController: MandelViewDelegate {
         
         busy = false
         showProgress(busy)
+    }
+}
+
+extension ViewController: NSWindowDelegate {
+    func windowDidResize(_ notification: Notification) {
+        renderMandel()
     }
 }
 

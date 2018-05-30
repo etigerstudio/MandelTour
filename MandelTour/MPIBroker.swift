@@ -20,7 +20,7 @@ class MPIBroker {
     
     weak var viewDelegate: MandelViewDelegate?
     
-    func spawnAgents(range: MandelRange) -> Bool {
+    func spawnAgents(range: MandelRange, resX: Int, resY: Int) -> Bool {
         if let process = mpiProcess {
             if process.isRunning {
                 return false
@@ -29,20 +29,20 @@ class MPIBroker {
         guard settleTmpDir() else {
             return false
         }
-        guard initProcess(range: range) else {
-                            return false
+        guard initProcess(range: range, resX: resX, resY: resY) else {
+            return false
         }
         return true;
     }
     
-    private func initProcess(range: MandelRange) -> Bool {
+    private func initProcess(range: MandelRange, resX: Int, resY: Int) -> Bool {
         mpiProcess = Process()
         //mpiProcess?.currentDirectoryPath = "/usr/local/bin"
         mpiProcess?.executableURL =
             URL(fileURLWithPath: MPI_EXEC_PATH)
         mpiProcess?.arguments = ["-n", "4", "-wd", TMP_DIR_PATH,
             AGENT_EXEC_PATH, "\(range.minR)", "\(range.maxR)",
-            "\(range.minI)", "\(range.maxI)"]
+            "\(range.minI)", "\(range.maxI)", "\(resX)", "\(resY)"]
         do {
             try mpiProcess?.run()
         } catch {
