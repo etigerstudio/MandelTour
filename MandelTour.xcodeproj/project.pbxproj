@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		571764B220BD2C9E004BD5E6 /* MPIBroker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571764B120BD2C9E004BD5E6 /* MPIBroker.swift */; };
 		571764B420BD4CB3004BD5E6 /* Mandel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571764B320BD4CB3004BD5E6 /* Mandel.swift */; };
-		571764B620BD52F2004BD5E6 /* MPILaucher.sh in Resources */ = {isa = PBXBuildFile; fileRef = 571764B520BD521E004BD5E6 /* MPILaucher.sh */; };
+		571764B820BE63AA004BD5E6 /* AutoTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571764B720BE63AA004BD5E6 /* AutoTextField.swift */; };
 		57D6951620B71C2E00AF19AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D6951520B71C2E00AF19AD /* AppDelegate.swift */; };
 		57D6951820B71C2E00AF19AD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D6951720B71C2E00AF19AD /* ViewController.swift */; };
 		57D6951A20B71C2F00AF19AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 57D6951920B71C2F00AF19AD /* Assets.xcassets */; };
@@ -19,7 +19,7 @@
 /* Begin PBXFileReference section */
 		571764B120BD2C9E004BD5E6 /* MPIBroker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MPIBroker.swift; sourceTree = "<group>"; };
 		571764B320BD4CB3004BD5E6 /* Mandel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mandel.swift; sourceTree = "<group>"; };
-		571764B520BD521E004BD5E6 /* MPILaucher.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = MPILaucher.sh; sourceTree = "<group>"; };
+		571764B720BE63AA004BD5E6 /* AutoTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoTextField.swift; sourceTree = "<group>"; };
 		57D6951220B71C2E00AF19AD /* MandelTour.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MandelTour.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57D6951520B71C2E00AF19AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		57D6951720B71C2E00AF19AD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -67,7 +67,7 @@
 				57D6951E20B71C2F00AF19AD /* Info.plist */,
 				57D6951F20B71C2F00AF19AD /* MandelTour.entitlements */,
 				571764B320BD4CB3004BD5E6 /* Mandel.swift */,
-				571764B520BD521E004BD5E6 /* MPILaucher.sh */,
+				571764B720BE63AA004BD5E6 /* AutoTextField.swift */,
 			);
 			path = MandelTour;
 			sourceTree = "<group>";
@@ -136,7 +136,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				57D6951A20B71C2F00AF19AD /* Assets.xcassets in Resources */,
-				571764B620BD52F2004BD5E6 /* MPILaucher.sh in Resources */,
 				57D6951D20B71C2F00AF19AD /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -149,6 +148,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				571764B420BD4CB3004BD5E6 /* Mandel.swift in Sources */,
+				571764B820BE63AA004BD5E6 /* AutoTextField.swift in Sources */,
 				571764B220BD2C9E004BD5E6 /* MPIBroker.swift in Sources */,
 				57D6951820B71C2E00AF19AD /* ViewController.swift in Sources */,
 				57D6951620B71C2E00AF19AD /* AppDelegate.swift in Sources */,

@@ -23,15 +23,18 @@ class ViewController: NSViewController {
     @IBOutlet weak var progressContainer: NSView!
     @IBOutlet weak var progressIndicator: NSProgressIndicator!
     @IBOutlet weak var progressLabel: NSTextField!
+    @IBOutlet var numberFormatter: NumberFormatter!
     
     var busy = false
+    var entered = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initView()
         initDelegate()
+        initMandelRange()
     }
-
+    
     func initView() {
         let labelAlpha: CGFloat = 0.75
         realAxisLabel.alphaValue = labelAlpha
@@ -42,6 +45,8 @@ class ViewController: NSViewController {
         rMaxField.alphaValue = fieldAlpha
         iMinField.alphaValue = fieldAlpha
         iMaxField.alphaValue = fieldAlpha
+        
+        //numberFormatter.positivePrefix = numberFormatter.plusSign
         
         manbelContainer.wantsLayer = true;
         manbelContainer.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.15).cgColor
@@ -56,17 +61,79 @@ class ViewController: NSViewController {
         MPIBroker.shared.viewDelegate = self
     }
     
+    func initMandelRange() {
+        updateMandelTextualRange()
+    }
+    
+    func getAspectRatio() -> Double {
+        return Double(mandelScrollView.frame.width) /
+            Double(mandelScrollView.frame.height)
+    }
+    
+    func retireFirstResponder() {
+        view.window?.makeFirstResponder(view)
+    }
+    
+    @IBAction func editDidEnd(_ sender: NSTextField) {
+        let dirty = adjustMandelArg(tag: sender.tag, value: sender.doubleValue)
+        retireFirstResponder()
+        if dirty {
+            renderMandel()
+        }
+    }
+    
+    func adjustMandelArg(tag: Int, value: Double) -> Bool {
+        var dirty = false
+        switch tag {
+        case 0:
+            if Mandel.shared.range.minR != value {
+                dirty = true
+                Mandel.shared.range.minR = value
+            }
+        case 1:
+            if Mandel.shared.range.maxR != value {
+                dirty = true
+                Mandel.shared.range.maxR = value
+            }
+        case 2:
+            if Mandel.shared.range.minI != value {
+                dirty = true
+                Mandel.shared.range.minI = value
+            }
+        case 3:
+            if Mandel.shared.range.maxI != value {
+                dirty = true
+                Mandel.shared.range.maxI = value
+            }
+        default:
+            break
+        }
+        updateMandelTextualRange()
+        return dirty
+    }
+    
+    func renderMandel() {
+        guard entered && !busy else {
+            return
+        }
+        invokeAgent()
+    }
+    
     @IBAction func hideWelcome(_ sender: Any) {
         NSAnimationContext.current.duration = 0.15
         welcomeContainer.animator().isHidden = true
         mandelScrollView.isHidden = false
-        invokeAgent()
+        entered = true
+        renderMandel()
     }
     
     func invokeAgent() {
         busy = true
         showProgress(busy)
-        let _ = MPIBroker.shared.spawnAgents(minX: -2, maxX: 1, minY: -1.5, maxY: 1.5)
+        let range = Mandel.shared.calibratedRange(
+            width: Double(mandelScrollView.frame.width),
+            height: Double(mandelScrollView.frame.height))
+        let _ = MPIBroker.shared.spawnAgents(range: range)
     }
     
     func showProgress(_ busy: Bool) {
@@ -79,10 +146,15 @@ class ViewController: NSViewController {
         }
     }
     
-    override var representedObject: Any? {
-        didSet {
-        // Update the view, if already loaded.
-        }
+    func updateMandelTextualRange() {
+        rMinField.doubleValue = Mandel.shared.range.minR
+        rMaxField.doubleValue = Mandel.shared.range.maxR
+        iMinField.doubleValue = Mandel.shared.range.minI
+        iMaxField.doubleValue = Mandel.shared.range.maxI
+    }
+    
+    override func mouseUp(with event: NSEvent) {
+        retireFirstResponder()
     }
 }
 
@@ -99,6 +171,9 @@ extension ViewController: MandelViewDelegate {
                     path.appending("/mandel\(i).png"))
             }
         }
+        mandelScrollView.isHidden = true
+        NSAnimationContext.current.duration = 0.15
+        mandelScrollView.animator().isHidden = false
         
         busy = false
         showProgress(busy)

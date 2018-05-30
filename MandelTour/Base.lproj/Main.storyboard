@@ -257,41 +257,57 @@
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d1h-E7-uSv">
-                                                <rect key="frame" x="97" y="335" width="130" height="33"/>
+                                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d1h-E7-uSv">
+                                                <rect key="frame" x="97" y="334" width="130" height="35"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" alignment="right" title="4.54535" drawsBackground="YES" id="9Ll-ci-CCK">
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" alignment="right" title="-2.00000" drawsBackground="YES" id="9Ll-ci-CCK">
                                                     <font key="font" size="22" name="SFMono-Regular"/>
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                                 </textFieldCell>
+                                                <connections>
+                                                    <action selector="editDidEnd:" target="XfG-lQ-9wD" id="XRo-Kg-5lj"/>
+                                                    <outlet property="formatter" destination="XoF-f2-IXp" id="lY6-JB-6l8"/>
+                                                </connections>
                                             </textField>
-                                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aNB-HI-diH">
-                                                <rect key="frame" x="97" y="276" width="130" height="33"/>
+                                            <textField verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="aNB-HI-diH">
+                                                <rect key="frame" x="97" y="275" width="130" height="35"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" state="on" alignment="right" title="1.23234" drawsBackground="YES" id="X7P-69-hNg">
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" alignment="right" title="+1.00000" drawsBackground="YES" id="X7P-69-hNg">
                                                     <font key="font" size="22" name="SFMono-Regular"/>
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                                 </textFieldCell>
+                                                <connections>
+                                                    <action selector="editDidEnd:" target="XfG-lQ-9wD" id="DHP-nf-qbA"/>
+                                                    <outlet property="formatter" destination="XoF-f2-IXp" id="Ffc-R1-fFL"/>
+                                                </connections>
                                             </textField>
-                                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ecZ-Gn-cDH">
-                                                <rect key="frame" x="97" y="168" width="130" height="33"/>
+                                            <textField verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="ecZ-Gn-cDH">
+                                                <rect key="frame" x="97" y="167" width="130" height="35"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" state="on" alignment="right" title="2.23454" drawsBackground="YES" id="rbO-Ba-11f">
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" alignment="right" title="-1.50000" drawsBackground="YES" id="rbO-Ba-11f">
                                                     <font key="font" size="22" name="SFMono-Regular"/>
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                                 </textFieldCell>
+                                                <connections>
+                                                    <action selector="editDidEnd:" target="XfG-lQ-9wD" id="Kgj-7h-9bR"/>
+                                                    <outlet property="formatter" destination="XoF-f2-IXp" id="5xm-5X-JFL"/>
+                                                </connections>
                                             </textField>
-                                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vwt-cl-pny">
-                                                <rect key="frame" x="97" y="110" width="130" height="33"/>
+                                            <textField verticalHuggingPriority="750" fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="Vwt-cl-pny">
+                                                <rect key="frame" x="97" y="109" width="130" height="35"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" state="on" alignment="right" title="2.98734" drawsBackground="YES" id="iY0-Y1-vHq">
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" alignment="right" title="+1.50000" drawsBackground="YES" id="iY0-Y1-vHq">
                                                     <font key="font" size="22" name="SFMono-Regular"/>
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                                 </textFieldCell>
+                                                <connections>
+                                                    <action selector="editDidEnd:" target="XfG-lQ-9wD" id="BUM-mk-2kg"/>
+                                                    <outlet property="formatter" destination="XoF-f2-IXp" id="xP9-fG-i5O"/>
+                                                </connections>
                                             </textField>
                                         </subviews>
                                         <constraints>
@@ -326,19 +342,19 @@
                                                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="caN-Fr-zOz">
                                                             <rect key="frame" x="0.0" y="0.0" width="720" height="540"/>
                                                             <subviews>
-                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wXV-58-giy">
+                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="499" verticalCompressionResistancePriority="499" translatesAutoresizingMaskIntoConstraints="NO" id="wXV-58-giy">
                                                                     <rect key="frame" x="0.0" y="270" width="360" height="270"/>
                                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" id="0F7-b3-CFy"/>
                                                                 </imageView>
-                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VFq-OZ-NRD">
+                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="499" verticalCompressionResistancePriority="499" translatesAutoresizingMaskIntoConstraints="NO" id="VFq-OZ-NRD">
                                                                     <rect key="frame" x="360" y="270" width="360" height="270"/>
                                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" id="uUg-lX-VqK"/>
                                                                 </imageView>
-                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="f4v-hC-4pH">
+                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="499" verticalCompressionResistancePriority="499" translatesAutoresizingMaskIntoConstraints="NO" id="f4v-hC-4pH">
                                                                     <rect key="frame" x="0.0" y="0.0" width="360" height="270"/>
                                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" id="16A-ub-U3T"/>
                                                                 </imageView>
-                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="P0K-G0-7oj">
+                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="499" verticalCompressionResistancePriority="499" translatesAutoresizingMaskIntoConstraints="NO" id="P0K-G0-7oj">
                                                                     <rect key="frame" x="360" y="0.0" width="360" height="270"/>
                                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" id="lsG-UD-KtR"/>
                                                                 </imageView>
@@ -476,6 +492,7 @@
                         <outlet property="imagAxisLabel" destination="phZ-Ry-ma9" id="uht-xr-14n"/>
                         <outlet property="manbelContainer" destination="AoG-XP-0iJ" id="4hR-iZ-rgG"/>
                         <outlet property="mandelScrollView" destination="sth-9B-hoU" id="esj-NU-MBj"/>
+                        <outlet property="numberFormatter" destination="XoF-f2-IXp" id="gMz-XS-tdM"/>
                         <outlet property="progressContainer" destination="XUF-FC-cWr" id="nwY-eZ-NCo"/>
                         <outlet property="progressIndicator" destination="gnQ-cC-jR4" id="uhT-oe-Z2k"/>
                         <outlet property="progressLabel" destination="MtG-ka-72b" id="eVF-cm-sQr"/>
@@ -486,6 +503,10 @@
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <numberFormatter formatterBehavior="custom10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="1" minimumFractionDigits="5" maximumFractionDigits="5" id="XoF-f2-IXp">
+                    <real key="minimum" value="-500"/>
+                    <real key="maximum" value="500"/>
+                </numberFormatter>
             </objects>
             <point key="canvasLocation" x="75" y="857"/>
         </scene>
