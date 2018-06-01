@@ -14,7 +14,7 @@ class Mandel {
     
     var range = MandelRange.initial
     
-    func calibratedRange( width: Double, height: Double) -> MandelRange {
+    func calibratedRange(width: Double, height: Double) -> MandelRange {
         let rView = width / height
         let rMandel = (range.maxR - range.minR) / (range.maxI - range.minI)
         
