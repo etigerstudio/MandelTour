@@ -422,14 +422,14 @@
                                                 <rect key="frame" x="138" y="85" width="444" height="371"/>
                                                 <subviews>
                                                     <imageView horizontalCompressionResistancePriority="497" verticalCompressionResistancePriority="497" translatesAutoresizingMaskIntoConstraints="NO" id="cys-EU-2lc">
-                                                        <rect key="frame" x="88" y="103" width="268" height="268"/>
+                                                        <rect key="frame" x="88" y="102" width="268" height="269"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="cys-EU-2lc" secondAttribute="height" multiplier="1:1" id="rWn-1y-cGB"/>
                                                         </constraints>
                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="PadAppIcon" id="tda-Bu-aC7"/>
                                                     </imageView>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0Tq-V0-m9y">
-                                                        <rect key="frame" x="169" y="70" width="107" height="24"/>
+                                                        <rect key="frame" x="169" y="69" width="107" height="24"/>
                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="MandelTour" drawsBackground="YES" id="JfL-6r-bJs">
                                                             <font key="font" metaFont="system" size="20"/>
                                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -437,7 +437,7 @@
                                                         </textFieldCell>
                                                     </textField>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LVO-pg-efJ">
-                                                        <rect key="frame" x="95" y="46" width="255" height="19"/>
+                                                        <rect key="frame" x="95" y="45" width="255" height="19"/>
                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Unveil the Mistery of Mandelbrot Set." drawsBackground="YES" id="Wj2-cR-q2c">
                                                             <font key="font" metaFont="systemLight" size="15"/>
                                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -492,6 +492,11 @@
                                                     <action selector="magnifyMandel:" target="XfG-lQ-9wD" id="XpI-WO-h1j"/>
                                                 </connections>
                                             </magnificationGestureRecognizer>
+                                            <panGestureRecognizer delaysPrimaryMouseButtonEvents="YES" id="k2R-Pv-EUG">
+                                                <connections>
+                                                    <action selector="translateMandel:" target="XfG-lQ-9wD" id="uoH-8z-WMa"/>
+                                                </connections>
+                                            </panGestureRecognizer>
                                         </gestureRecognizers>
                                     </customView>
                                 </subviews>

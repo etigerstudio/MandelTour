@@ -31,10 +31,10 @@ class ViewController: NSViewController {
     var hiresRender = false
     var useFirstContainer = false
     
-    var accumulatedMagnification: CGFloat = 0.0
+//    var accumulatedMagnification: CGFloat = 0.0
     var lastDeltaAnchor = CGPoint.zero
-    var mappingRect = CGRect.zero
-    var mappingRectTranlated = CGRect.zero
+//    var mappingRect = CGRect.zero
+//    var mappingRectTranlated = CGRect.zero
     var parameterX: (ratio: Double, c: Double) = (0,0)
     var parameterY: (ratio: Double, c: Double) = (0,0)
     
@@ -42,6 +42,7 @@ class ViewController: NSViewController {
         super.viewDidLoad()
         initView()
         initDelegate()
+        calibrateRange()
         //initMandelRange()
     }
     
@@ -81,6 +82,7 @@ class ViewController: NSViewController {
     
     override func viewDidAppear() {
         view.window?.delegate = self
+        calibrateRange()
     }
     
     func getAspectRatio() -> Double {
@@ -96,14 +98,19 @@ class ViewController: NSViewController {
         let dirty = adjustMandelArg(tag: sender.tag, value: sender.doubleValue)
         retireFirstResponder()
         if dirty {
+            calibrateRange()
             renderMandel()
         }
     }
     
+    func calibrateRange() {
+        let size = getRenderSize()
+        Mandel.shared.calibratedForFrame(width: Double(size.width), height: Double(size.height))
+    }
+    
     func adjustMandelArg(tag: Int, value: Double) -> Bool {
         var dirty = false
-        let size = getRenderSize()
-        let range = Mandel.shared.calibratedRange(width: Double(size.width), height: Double(size.height))
+        let range = Mandel.shared.range
         switch tag {
         case 0:
             if range.minR != value {
@@ -128,12 +135,13 @@ class ViewController: NSViewController {
         default:
             break
         }
+        
         return dirty
     }
     
     func renderMandel() {
         updateMandelTextualRange()
-        guard entered && !busy else {
+        guard getIsReady() else {
             return
         }
         invokeAgent()
@@ -152,7 +160,7 @@ class ViewController: NSViewController {
         showProgress(busy)
         
         let size = getRenderSize()
-        let range = Mandel.shared.calibratedRange(width: Double(size.width), height: Double(size.height))
+        let range = Mandel.shared.range
         let _ = MPIBroker.shared.spawnAgents(range: range, resX: size.width, resY: size.height)
     }
     
@@ -180,8 +188,7 @@ class ViewController: NSViewController {
     }
     
     func updateMandelTextualRange() {
-        let size = getRenderSize()
-        let range = Mandel.shared.calibratedRange(width: Double(size.width), height: Double(size.height))
+        let range = Mandel.shared.range
         rMinField.doubleValue = range.minR
         rMaxField.doubleValue = range.maxR
         iMinField.doubleValue = range.minI
@@ -192,17 +199,39 @@ class ViewController: NSViewController {
         retireFirstResponder()
     }
     
+    func getIsReady() -> Bool {
+        return !busy && entered
+    }
+    
+    @IBAction func translateMandel(_ sender: NSPanGestureRecognizer) {
+        if getIsReady() {
+            switch sender.state {
+            case .began:
+                translateBegan(sender: sender)
+            case .changed:
+                translateChanged(sender: sender)
+            case .ended, .cancelled:
+                translateEnded(sender: sender)
+            default:
+                print("Translate state falls default.")
+                break
+            }
+        }
+    }
+    
     @IBAction func magnifyMandel(_ sender: NSMagnificationGestureRecognizer) {
-        switch sender.state {
-        case .began:
-            magnifyBegan(sender: sender)
-        case .changed:
-            magnifyChange(sender: sender)
-        case .ended, .cancelled:
-            magnifyEnd(sender: sender)
-        default:
-            print("Magnify state falls default.")
-            break
+        if getIsReady() {
+            switch sender.state {
+            case .began:
+                magnifyBegan(sender: sender)
+            case .changed:
+                magnifyChanged(sender: sender)
+            case .ended, .cancelled:
+                magnifyEnded(sender: sender)
+            default:
+                print("Magnify state falls default.")
+                break
+            }
         }
 //        switch sender.state {
 //        case .began:
@@ -262,24 +291,22 @@ extension ViewController: MandelViewDelegate {
 
 extension ViewController {
     func magnifyBegan(sender: NSMagnificationGestureRecognizer) {
-        accumulatedMagnification = 1.0
+//        accumulatedMagnification = 1.0
         lastDeltaAnchor = .zero
-        mappingRect = .zero
-        mappingRectTranlated = .zero
+//        mappingRect = .zero
+//        mappingRectTranlated = .zero
         
         let container = getPrimaryContainer();
         adjustAnchor(origin: sender.location(in: container), container: container)
-        adjustToMagnification(getRefinedMagnification(sender.magnification), origin: sender.location(in: container), container: container)
+        applyMagnification(sender: sender)
     }
     
-    func magnifyChange(sender: NSMagnificationGestureRecognizer) {
-        let container = getPrimaryContainer();
-        adjustToMagnification(getRefinedMagnification(sender.magnification), origin: sender.location(in: container), container: container)
+    func magnifyChanged(sender: NSMagnificationGestureRecognizer) {
+        applyMagnification(sender: sender)
     }
     
-    func magnifyEnd(sender: NSMagnificationGestureRecognizer) {
-        let container = getPrimaryContainer();
-        adjustToMagnification(getRefinedMagnification(sender.magnification), origin: sender.location(in: container), container: container)
+    func magnifyEnded(sender: NSMagnificationGestureRecognizer) {
+        applyMagnification(sender: sender)
         commitRangeChange()
         renderMandel()
     }
@@ -300,20 +327,19 @@ extension ViewController {
         }
     }
     
-    func buildMappingRect() -> CGRect {
-        let size = getRenderSize()
-        let range = Mandel.shared.calibratedRange(width: Double(size.width), height: Double(size.height))
-        
-        return CGRect(x: CGFloat(range.minR), y: CGFloat(range.minI), width: CGFloat(range.maxR - range.minR), height: CGFloat(range.maxI - range.minI))
-    }
+//    func buildMappingRect() -> CGRect {
+//        let size = getRenderSize()
+//        let range = Mandel.shared.calibratedRange(width: Double(size.width), height: Double(size.height))
+//
+//        return CGRect(x: CGFloat(range.minR), y: CGFloat(range.minI), width: CGFloat(range.maxR - range.minR), height: CGFloat(range.maxI - range.minI))
+//    }
     
     func viewToZPlane(coord: Double, ratio: Double, c: Double) -> Double {
         return coord * ratio + c
     }
     
     func determineParameter(frame: CGRect) {
-        let size = getRenderSize()
-        let range = Mandel.shared.calibratedRange(width: Double(size.width), height: Double(size.height))
+        let range = Mandel.shared.range
         let ratioX = (range.maxR - range.minR) / Double(frame.width)
         let cX = range.minR - (range.maxR - range.minR) / Double(frame.width) * Double(frame.minX)
         parameterX = (ratio: ratioX, c: cX)
@@ -322,14 +348,16 @@ extension ViewController {
         parameterY = (ratio: ratioY, c: cY)
     }
     
-    func adjustToMagnification(_ magnification: CGFloat, origin: CGPoint, container: NSView) {
+    func applyMagnification(sender: NSMagnificationGestureRecognizer) {
+        let container = getPrimaryContainer();
+        let magnification = getRefinedMagnification(sender.magnification)
         if let layer = container.layer {
             let transform = layer.affineTransform().scaledBy(x: magnification, y: magnification)
             layer.setAffineTransform(transform)
             
             //mappingRectTranlated.applying(CGAffineTransform(scaleX: magnification, y: magnification))
             
-            accumulatedMagnification *= magnification
+            //accumulatedMagnification *= magnification
             /*for view in container.subviews {
                 view.wantsLayer = true
                 view.layer?.setAffineTransform((view.layer!.affineTransform().scaledBy(x: magnification, y: magnification)))
@@ -348,18 +376,18 @@ extension ViewController {
     
     func commitRangeChange() {
         let container = getPrimaryContainer()
-        let size = getRenderSize()
-        let oldRange = Mandel.shared.calibratedRange(width: Double(size.width), height: Double(size.height))
+//       let size = getRenderSize()
+//        let oldRange = Mandel.shared.calibratedRange(width: Double(size.width), height: Double(size.height))
 
         let of = container.frame
-        guard let nf = container.layer?.frame,
-            let anchor = container.layer?.anchorPoint else {
+        guard let nf = container.layer?.frame/*,
+            let anchor = container.layer?.anchorPoint*/ else {
             return
         }
 
-        let oc = CGPoint(x: of.origin.x + anchor.x * of.width, y: of.origin.x + anchor.y * of.height)
+//        let oc = CGPoint(x: of.origin.x + anchor.x * of.width, y: of.origin.x + anchor.y * of.height)
         
-        let scale = (oc.y - nf.origin.y) / oc.y
+//        let scale = (oc.y - nf.origin.y) / oc.y
         
 //        let minViewR = oc.x - (oc.x - nf.origin.x) / scale
 //        let minViewI = oc.y - (oc.y - nf.origin.y) / scale
@@ -408,8 +436,44 @@ extension ViewController {
     }
 }
 
+extension ViewController {
+    func translateBegan(sender: NSPanGestureRecognizer) {
+        applyTranslation(sender: sender)
+    }
+    
+    func translateChanged(sender: NSPanGestureRecognizer) {
+        applyTranslation(sender: sender)
+    }
+    
+    func translateEnded(sender: NSPanGestureRecognizer) {
+        applyTranslation(sender: sender)
+        commitRangeChange()
+        renderMandel()
+    }
+    
+//    func getRefinedTranslation(_ translation: CGFloat) -> CGFloat {
+//        return translation
+//    }
+    
+    func applyTranslation(sender: NSPanGestureRecognizer) {
+        let container = getPrimaryContainer();
+        guard let layer = container.layer else {
+            return
+        }
+        
+        let dx = sender.translation(in: container).x
+        let dy = sender.translation(in: container).y
+        layer.setAffineTransform(layer.affineTransform().translatedBy(x: dx, y: dy))
+        
+        sender.setTranslation(CGPoint.zero, in: container)
+    }
+}
+
 extension ViewController: NSWindowDelegate {
     func windowDidEndLiveResize(_ notification: Notification) {
+        if getIsReady() {
+            calibrateRange()
+        }
         renderMandel()
     }
 }
