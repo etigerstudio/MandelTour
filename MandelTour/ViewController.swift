@@ -292,8 +292,8 @@ extension ViewController {
         
         if let layer = container.layer {
             lastDeltaAnchor = CGPoint(x: dxf, y: dyf)
-            layer.anchorPoint = CGPoint(x: 0.5 - dxf, y: 0.5 + dyf)
-            layer.setAffineTransform(layer.affineTransform().translatedBy(x: -dx, y: +dy))
+            layer.anchorPoint = CGPoint(x: 0.5 - dxf, y: 0.5 - dyf)
+            layer.setAffineTransform(layer.affineTransform().translatedBy(x: -dx, y: -dy))
             
 //            mappingRect = buildMappingRect()
 //            mappingRectTranlated = mappingRect.applying(CGAffineTransform(translationX: mappingRect.size.width * -dxf, y: mappingRect.size.height * -dyf))
@@ -339,7 +339,7 @@ extension ViewController {
     
     func resetTransformForContainer(_ container: NSView) {
         container.layer?.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        container.layer?.setAffineTransform(CGAffineTransform(translationX: container.frame.width / 2, y: container.frame.height / 2).scaledBy(x: 1, y: -1))
+        container.layer?.setAffineTransform(CGAffineTransform(translationX: container.frame.width / 2, y: container.frame.height / 2)/*.scaledBy(x: 1, y: -1)*/)
     }
     
     func getRefinedMagnification(_ magnification: CGFloat) -> CGFloat {
