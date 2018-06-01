@@ -14,35 +14,26 @@ class Mandel {
     
     var range = MandelRange.initial
     
-    func calibratedRange(width: Double, height: Double) -> MandelRange {
+    func calibratedForFrame(width: Double, height: Double) {
+        print("cali")
         let rView = width / height
         let rMandel = (range.maxR - range.minR) / (range.maxI - range.minI)
         
-        var rangeC = MandelRange.zero
-        let rV2M: Double
+        var calibratedRange = MandelRange.zero
         let delta: Double
         
-        if rView > rMandel {
-            rV2M = (range.maxI - range.minI) / height
-            delta = (width * rV2M - (range.maxR - range.minI)) / 2
-            rangeC.minR = range.minR - delta
-            rangeC.maxR = range.maxR + delta
+        if rView != rMandel {
+            delta = (((range.maxR - range.minR) / rMandel * rView) - (range.maxR - range.minR)) / 2
+            calibratedRange.minR = range.minR - delta
+            calibratedRange.maxR = range.maxR + delta
             
-            rangeC.minI = range.minI
-            rangeC.maxI = range.maxI
-        } else if rView < rMandel {
-            rV2M = (range.maxR - range.minR) / width
-            delta = (height * rV2M - (range.maxI - range.minI)) / 2
-            rangeC.minI = range.minI - delta
-            rangeC.maxI = range.maxI - delta
-            
-            rangeC.minR = range.minR
-            rangeC.maxR = range.maxR
+            calibratedRange.minI = range.minI
+            calibratedRange.maxI = range.maxI
+            calibratedRange = range
         } else {
-            rangeC = range
+            range = calibratedRange
         }
         
-        return rangeC
     }
 }
 
